@@ -119,6 +119,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .form .row { grid-template-columns: minmax(0, 1fr); }
   .log li { grid-template-columns: 48px minmax(0, 1fr) auto; gap: 10px; padding: 12px 14px; }
 }
+.latest a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+.latest a:hover { border-color: var(--accent); }
+.latest h3 { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 8px; }
+.latest p { margin: 0; color: var(--muted); }
+.latest .go { font-weight: 700; color: var(--accent); white-space: nowrap; }
+@media (max-width: 600px) { .latest a { grid-template-columns: minmax(0, 1fr); } }
 </style>
 <meta property="og:title" content="Chronically Rebranding">
 <meta property="og:description" content="Notes on rethinking your career.">
@@ -132,6 +138,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <li><a href="#idea">The idea</a></li>
         <li><a href="#changelog">Write yours</a></li>
         <li><a href="#story">One-sentence story</a></li>
+        <li><a href="/posts/">Posts</a></li>
         <li><a href="#about">About</a></li>
       </ul>
     </nav>
@@ -229,6 +236,18 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
+  <section id="posts" aria-labelledby="posts-h">
+    <div class="wrap latest">
+      <p class="label">Latest post</p>
+      <h2 id="posts-h" style="margin-bottom:24px">From the release notes</h2>
+      <a href="/posts/release-notes/">
+        <div><p class="meta" style="font-family:var(--mono);font-size:13px;margin-bottom:8px">Oct 13, 2026 · 3 min read</p><h3>Your career doesn't need a reinvention. It needs release notes.</h3><p>Why careers ship in versions, and a 10-minute exercise to write your own changelog.</p></div>
+        <span class="go">Read it →</span>
+      </a>
+      <p style="margin-top:18px"><a href="/posts/" style="display:inline;padding:0;border:0;background:none;font-weight:700">See all posts →</a></p>
+    </div>
+  </section>
+
   <section id="about" aria-labelledby="about-h">
     <div class="wrap about">
       <p class="big-quote">Not a <span>reinvention</span>. Just the next release.</p>
@@ -236,7 +255,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <p class="label">About</p>
         <h2 id="about-h">Hi, I'm Melissa</h2>
         <p>I've rebranded myself more than once, and each time it was less about starting over and more about updating the story. This is where I share the frameworks and templates that helped, and honest notes from the middle of the process.</p>
-        <p>New posts are on the way. Follow along on Instagram at @chronicallyrebranding.</p>
+        <p>Read the <a href="/posts/">posts</a>, and follow along on Instagram at @chronicallyrebranding.</p>
       </div>
     </div>
   </section>
