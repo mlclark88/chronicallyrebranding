@@ -8,13 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: big type-led hero, three principles, a working "write your changelog" tool as the signature, one real framework, about */
+/* Layout: calm two-column hero with the changelog as the visual, one quiet idea strip, the tool, the framework, latest post, short about. Spacing and soft bands instead of rules. */
 :root {
-  --paper: #f4f5f7;
+  --paper: #f6f6f8;
+  --band: #ecedf1;
   --card: #ffffff;
   --ink: #1b1a26;
   --muted: #5c5b6b;
-  --line: #dcdce3;
+  --line: #e1e1e8;
   --accent: #d93a47;
   --accent-soft: #fde4e5;
   --mint: #23806a;
@@ -25,106 +26,113 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #13131a; --card: #1c1c26; --ink: #f1f0f5; --muted: #a9a8b8; --line: #2e2e3b;
+    --paper: #13131a; --band: #191922; --card: #20202b; --ink: #f1f0f5; --muted: #a9a8b8; --line: #2e2e3b;
     --accent: #ff6b74; --accent-soft: #3a1f24; --mint: #6fd1b4; --mint-soft: #16322b; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #13131a; --card: #1c1c26; --ink: #f1f0f5; --muted: #a9a8b8; --line: #2e2e3b;
+  --paper: #13131a; --band: #191922; --card: #20202b; --ink: #f1f0f5; --muted: #a9a8b8; --line: #2e2e3b;
   --accent: #ff6b74; --accent-soft: #3a1f24; --mint: #6fd1b4; --mint-soft: #16322b; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
 a { color: inherit; }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-.wrap { max-width: 1100px; margin: 0 auto; padding-inline: 20px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
 
-header.site { padding-block: 20px; }
-header.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 28px; }
-.mark { font-family: var(--display); font-weight: 800; font-size: 20px; text-decoration: none; letter-spacing: -0.02em; }
+header.site { padding-block: 22px; }
+header.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.mark { font-family: var(--display); font-weight: 800; font-size: 19px; text-decoration: none; letter-spacing: -0.02em; }
 .mark span { color: var(--accent); }
-.brand-block { display: flex; flex-direction: column; gap: 2px; }
-.tagline { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-weight: 700; font-size: 15px; }
-nav a { text-decoration: none; border-bottom: 2px solid transparent; padding-block: 3px; }
-nav a:hover { border-bottom-color: var(--accent); }
+.tagline { display: block; font-size: 13px; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 22px; font-weight: 700; font-size: 15px; }
+nav a { text-decoration: none; }
+nav a:hover { color: var(--accent); }
 
-.hero { padding-block: 40px 64px; }
-.old { font-family: var(--mono); font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0 0 22px; }
-.old s { text-decoration-thickness: 2px; text-decoration-color: var(--accent); }
-.hero h1 { font-family: var(--display); font-weight: 800; font-size: clamp(44px, 9.5vw, 116px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.lede { font-size: 21px; max-width: 32em; margin: 0 0 30px; color: var(--muted); }
-.lede strong { color: var(--ink); }
-.btns { display: flex; flex-wrap: wrap; gap: 12px; }
-.btn { text-decoration: none; font-weight: 700; padding: 12px 22px; border-radius: 10px; border: 2px solid var(--ink); font-size: 15px; background: transparent; color: var(--ink); font-family: var(--body); cursor: pointer; }
-.btn.solid { background: var(--ink); color: var(--paper); }
-.btn.small { padding: 8px 14px; font-size: 14px; border-radius: 8px; }
+.hero { padding-block: 40px 72px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 56px; align-items: center; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 6vw, 68px); line-height: 1; letter-spacing: -0.04em; margin: 0 0 22px; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--accent); }
+.lede { font-size: 19px; color: var(--muted); max-width: 30em; margin: 0 0 28px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
+.btn { text-decoration: none; font-weight: 700; padding: 12px 22px; border-radius: 999px; font-size: 15px; background: var(--ink); color: var(--paper); border: 0; font-family: var(--body); cursor: pointer; }
+.btn:hover { background: var(--accent); }
+.link { font-weight: 700; text-decoration: none; }
+.link:hover { color: var(--accent); }
 
-section { padding-block: 64px; border-top: 1px solid var(--line); }
-.label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4.5vw, 46px); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 14px; text-wrap: balance; }
-.sub { color: var(--muted); max-width: 38em; margin: 0 0 32px; }
-
-.principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
-.principle { border-top: 3px solid var(--ink); padding-top: 16px; }
-.principle .n { font-family: var(--mono); font-size: 13px; color: var(--accent); }
-.principle h3 { font-family: var(--display); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; line-height: 1.15; margin: 6px 0 8px; }
-.principle p { margin: 0; color: var(--muted); }
-
-.tool { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 36px; align-items: start; }
-.form { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; }
-.form label { display: grid; gap: 6px; font-weight: 700; font-size: 14px; }
-.form input, .form select { font: inherit; font-weight: 400; font-size: 16px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); width: 100%; }
-.form .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
-.form .hint { font-size: 13px; color: var(--muted); margin: 0; }
-.log { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-family: var(--mono); font-size: 14px; }
-.log-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 18px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
-.log-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.log ol { list-style: none; margin: 0; padding: 0; }
-.log li { display: grid; grid-template-columns: 60px minmax(0, 1fr) auto; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: start; }
-.log li:last-child { border-bottom: 0; }
-.v { font-weight: 600; }
+/* the changelog card, used in hero and tool */
+.log { background: var(--card); border-radius: 18px; box-shadow: 0 1px 2px rgba(20,20,40,.05), 0 12px 32px -12px rgba(20,20,40,.18); overflow: hidden; }
+.log-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 20px; font-family: var(--mono); font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+.log ol { list-style: none; margin: 0; padding: 6px 0; }
+.log li { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; padding: 12px 20px; align-items: start; }
+.v { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--muted); padding-top: 2px; }
 .log li.major .v { color: var(--accent); }
-.log .t { font-weight: 600; display: block; overflow-wrap: anywhere; }
-.log .d { color: var(--muted); font-family: var(--body); font-size: 15px; overflow-wrap: anywhere; }
-.log .rm { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 2px 6px; }
-.chip { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 5px; margin-right: 6px; vertical-align: 1px; }
+.t { font-weight: 700; display: block; overflow-wrap: anywhere; }
+.d { color: var(--muted); font-size: 15px; display: block; overflow-wrap: anywhere; }
+.chip { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 1px 8px; border-radius: 999px; margin-right: 8px; vertical-align: 2px; font-weight: 600; }
 .chip.new { background: var(--mint-soft); color: var(--mint); }
 .chip.big { background: var(--accent-soft); color: var(--accent); }
-.chip.fix { background: var(--line); color: var(--muted); }
-.empty { padding: 28px 18px; color: var(--muted); font-family: var(--body); }
-.status { font-size: 13px; color: var(--mint); min-height: 1.2em; margin: 10px 0 0; }
-.sample-tag { font-family: var(--mono); font-size: 11px; background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 5px; }
+.chip.fix { background: var(--band); color: var(--muted); }
+.rm { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 2px 4px; opacity: .6; }
+.rm:hover { opacity: 1; color: var(--accent); }
+.empty { padding: 28px 20px; color: var(--muted); display: block !important; }
 
-.framework { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
-.template { background: var(--ink); color: var(--paper); border-radius: 14px; padding: 28px; font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.3; letter-spacing: -0.01em; }
-.template b { font-weight: 800; color: var(--accent); }
-.steps { margin: 0; padding-left: 1.2em; display: grid; gap: 12px; }
-.steps li::marker { font-family: var(--mono); color: var(--accent); }
-.example { margin-top: 18px; border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; color: var(--muted); }
+section { padding-block: 80px; }
+.band { background: var(--band); }
+.eyebrow { font-weight: 700; color: var(--accent); margin: 0 0 8px; font-size: 15px; }
+h2 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4vw, 42px); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 14px; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 34em; margin: 0; }
 
-.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
-.big-quote { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.03em; margin: 0; }
-.big-quote span { color: var(--accent); }
-.about p { max-width: 34em; }
+.idea { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 56px; align-items: start; }
+.points { display: grid; gap: 22px; margin: 0; padding: 0; list-style: none; }
+.points strong { display: block; font-family: var(--display); font-size: 21px; letter-spacing: -0.015em; }
+.points span { color: var(--muted); }
 
-footer { border-top: 1px solid var(--line); padding-block: 28px; font-size: 14px; color: var(--muted); }
+.tool { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
+.form { display: grid; gap: 16px; margin-top: 28px; }
+.types { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; margin: 0; }
+.types legend { font-weight: 700; font-size: 14px; margin-bottom: 8px; padding: 0; }
+.types input { position: absolute; opacity: 0; pointer-events: none; }
+.types label { padding: 8px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-size: 14px; font-weight: 700; cursor: pointer; }
+.types input:checked + label { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.types input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+.field { display: grid; gap: 6px; font-weight: 700; font-size: 14px; }
+.field input { font: inherit; font-weight: 400; font-size: 16px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); width: 100%; }
+.tool-actions { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.ghost { background: none; border: 0; font: inherit; font-weight: 700; font-size: 14px; color: var(--muted); cursor: pointer; padding: 4px 0; }
+.ghost:hover { color: var(--accent); }
+.status { font-size: 14px; color: var(--mint); min-height: 1.4em; margin: 0; }
+
+.story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.template { background: var(--ink); color: var(--paper); border-radius: 18px; padding: 32px; font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.35; letter-spacing: -0.01em; }
+.template b { color: var(--accent); }
+.example { margin: 22px 0 0; color: var(--muted); }
+.example strong { color: var(--ink); }
+
+.post-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; text-decoration: none; background: var(--card); border-radius: 18px; padding: 32px; margin-top: 28px; box-shadow: 0 1px 2px rgba(20,20,40,.05); }
+.post-card:hover h3 { color: var(--accent); }
+.post-card .meta { font-size: 14px; color: var(--muted); margin: 0 0 6px; }
+.post-card h3 { font-family: var(--display); font-weight: 800; font-size: clamp(22px, 3vw, 30px); letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+.post-card .go { font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+.about { max-width: 640px; }
+.about p { color: var(--muted); }
+
+footer { padding-block: 32px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
 
-@media (max-width: 880px) {
-  .principles, .tool, .framework, .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+@media (max-width: 860px) {
+  .hero .wrap, .idea, .tool, .story { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  section { padding-block: 56px; }
+  .hero { padding-block: 24px 56px; }
 }
-@media (max-width: 480px) {
-  .form .row { grid-template-columns: minmax(0, 1fr); }
-  .log li { grid-template-columns: 48px minmax(0, 1fr) auto; gap: 10px; padding: 12px 14px; }
+@media (max-width: 520px) {
+  .post-card { grid-template-columns: minmax(0, 1fr); padding: 24px; }
+  .log li { grid-template-columns: 44px minmax(0, 1fr) auto; padding: 12px 16px; }
+  nav ul { gap: 16px; }
 }
-.latest a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
-.latest a:hover { border-color: var(--accent); }
-.latest h3 { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 8px; }
-.latest p { margin: 0; color: var(--muted); }
-.latest .go { font-weight: 700; color: var(--accent); white-space: nowrap; }
-@media (max-width: 600px) { .latest a { grid-template-columns: minmax(0, 1fr); } }
 </style>
 <meta property="og:title" content="Chronically Rebranding">
 <meta property="og:description" content="Notes on rethinking your career.">
@@ -132,12 +140,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <body>
 <header class="site">
   <div class="wrap">
-    <div class="brand-block"><a class="mark" href="#top">Chronically <span>Rebranding</span></a><span class="tagline">notes on rethinking your career</span></div>
+    <div><a class="mark" href="#top">Chronically <span>Rebranding</span></a><span class="tagline">Notes on rethinking your career</span></div>
     <nav aria-label="Main">
       <ul>
-        <li><a href="#idea">The idea</a></li>
         <li><a href="#changelog">Write yours</a></li>
-        <li><a href="#story">One-sentence story</a></li>
         <li><a href="/posts/">Posts</a></li>
         <li><a href="#about">About</a></li>
       </ul>
@@ -148,114 +154,107 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <main id="top">
   <div class="hero">
     <div class="wrap">
-      <p class="old" aria-hidden="true"><s>v1 · figuring it out</s><s>v2 · new title</s><s>v3 · new story</s><span>v4 · in progress</span></p>
-      <h1>You don't need a reinvention. You need <em>release notes.</em></h1>
-      <p class="lede"><strong>Careers change in versions, not overnight.</strong> A practical take on rethinking your work: what changed, what you added, and how to tell the story of the next version of you.</p>
-      <div class="btns">
-        <a class="btn solid" href="#changelog">Write your changelog</a>
-        <a class="btn" href="https://www.instagram.com/chronicallyrebranding/" rel="noopener">Follow on Instagram</a>
+      <div>
+        <h1>You don't need a reinvention. You need <em>release notes.</em></h1>
+        <p class="lede">Careers change in versions, not overnight. This is a place to track what changed, and to tell the story of the next version of you.</p>
+        <div class="actions">
+          <a class="btn" href="#changelog">Write your changelog</a>
+          <a class="link" href="/posts/">Read the posts →</a>
+        </div>
+      </div>
+      <div class="log" aria-hidden="true">
+        <div class="log-head"><span class="dots"><i></i><i></i><i></i></span><span>career.changelog</span></div>
+        <ol>
+          <li><span class="v">v1.0</span><div><span class="t"><span class="chip new">new</span>First real job</span><span class="d">Said yes to almost everything.</span></div><span></span></li>
+          <li class="major"><span class="v">v2.0</span><div><span class="t"><span class="chip big">big change</span>Changed direction</span><span class="d">New field, new title.</span></div><span></span></li>
+          <li><span class="v">v2.1</span><div><span class="t"><span class="chip fix">update</span>Updated the story</span><span class="d">New headline, bio and pitch.</span></div><span></span></li>
+        </ol>
       </div>
     </div>
   </div>
 
-  <section id="idea" aria-labelledby="idea-h">
-    <div class="wrap">
-      <p class="label">The idea</p>
-      <h2 id="idea-h">Think like software, not like a movie montage.</h2>
-      <p class="sub">Apps don't reinvent themselves overnight. They ship small updates, the occasional big change, and notes that explain what's different. Careers work the same way, so this site borrows the format.</p>
-      <div class="principles">
-        <div class="principle"><span class="n">01</span><h3>Small releases beat big leaps</h3><p>A new skill, a side project or a stretch assignment counts. Most rebrands are a run of small updates, not one dramatic jump.</p></div>
-        <div class="principle"><span class="n">02</span><h3>Big changes are normal</h3><p>A new field, a layoff or a promotion can break the old story. That's a new version, not a failure.</p></div>
-        <div class="principle"><span class="n">03</span><h3>The story needs updates too</h3><p>Your bio, résumé and "so what do you do?" answer drift out of date. Patch them every time you ship.</p></div>
+  <section class="band" aria-labelledby="idea-h">
+    <div class="wrap idea">
+      <div>
+        <p class="eyebrow">The idea</p>
+        <h2 id="idea-h">Think like software, not a movie montage.</h2>
       </div>
+      <ul class="points">
+        <li><strong>Small releases beat big leaps.</strong><span>A new skill, a side project or a stretch assignment all count.</span></li>
+        <li><strong>Big changes are normal.</strong><span>A new field, a layoff or a promotion is a new version, not a failure.</span></li>
+        <li><strong>The story needs updates too.</strong><span>Your bio, résumé and "so what do you do?" drift out of date. Patch them every time you ship.</span></li>
+      </ul>
     </div>
   </section>
 
   <section id="changelog" aria-labelledby="log-h">
     <div class="wrap tool">
       <div>
-        <p class="label">Try it</p>
+        <p class="eyebrow">Try it</p>
         <h2 id="log-h">Write your career changelog</h2>
-        <p class="sub">List the versions of your career so far. Seeing it laid out makes patterns obvious, and it's a great starting point for a bio or an interview answer. Everything stays in your browser.</p>
+        <p class="sub">Add each step of your career, then copy the list into your bio or interview notes. It stays in your browser.</p>
         <form class="form" id="entry-form">
-          <div class="row">
-            <label for="f-version">Version
-              <input id="f-version" name="version" placeholder="v2.0" autocomplete="off">
-            </label>
-            <label for="f-type">Type of change
-              <select id="f-type" name="type">
-                <option value="new">New: added something</option>
-                <option value="big">Big change: a pivot</option>
-                <option value="fix">Update: fixed the story</option>
-              </select>
-            </label>
-          </div>
-          <label for="f-title">What changed
+          <fieldset class="types">
+            <legend>What kind of change?</legend>
+            <input type="radio" name="type" id="t-new" value="new" checked><label for="t-new">Something new</label>
+            <input type="radio" name="type" id="t-big" value="big"><label for="t-big">A big change</label>
+            <input type="radio" name="type" id="t-fix" value="fix"><label for="t-fix">Updated my story</label>
+          </fieldset>
+          <label class="field" for="f-title">What changed
             <input id="f-title" name="title" placeholder="Moved from teaching to UX research" required autocomplete="off">
           </label>
-          <label for="f-note">One line of detail (optional)
-            <input id="f-note" name="note" placeholder="Took a course at night, then a contract role" autocomplete="off">
+          <label class="field" for="f-note">Detail (optional)
+            <input id="f-note" name="note" placeholder="Took a night course, then a contract role" autocomplete="off">
           </label>
-          <div class="btns"><button class="btn solid small" type="submit">Add to changelog</button></div>
-          <p class="hint">Tip: a big change usually bumps the first number (v2.0 to v3.0). Small updates bump the second.</p>
+          <div class="tool-actions">
+            <button class="btn" type="submit">Add it</button>
+            <p class="status" id="status" role="status"></p>
+          </div>
         </form>
       </div>
       <div>
         <div class="log" aria-live="polite">
-          <div class="log-head">
-            <span>my-career.changelog <span class="sample-tag" id="sample-tag">example</span></span>
-            <div class="log-actions">
-              <button class="btn small" type="button" id="copy-btn">Copy as text</button>
-              <button class="btn small" type="button" id="clear-btn">Start mine</button>
-            </div>
-          </div>
+          <div class="log-head"><span class="dots"><i></i><i></i><i></i></span><span id="log-name">example.changelog</span></div>
           <ol id="log-list"></ol>
         </div>
-        <p class="status" id="status" role="status"></p>
+        <div class="tool-actions" style="margin-top:14px">
+          <button class="ghost" type="button" id="copy-btn">Copy as text</button>
+          <button class="ghost" type="button" id="clear-btn">Clear and start mine</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="story" aria-labelledby="story-h">
-    <div class="wrap framework">
+  <section class="band" aria-labelledby="story-h">
+    <div class="wrap story">
       <div>
-        <p class="label">Framework</p>
+        <p class="eyebrow">Framework</p>
         <h2 id="story-h">Your career story in one sentence</h2>
-        <p class="sub">When someone asks what you do, the answer should sound like your latest version, not a list of every job you've had.</p>
-        <div class="template">I help <b>[who]</b> with <b>[what problem]</b> by <b>[how you do it]</b>, and lately I've been <b>[what's new]</b>.</div>
+        <p class="sub">When someone asks what you do, answer with your latest version, not every job you've had.</p>
+        <p class="example"><strong>Before:</strong> "I'm an accountant at a mid-size firm."<br><strong>After:</strong> "I help small business owners see where their money goes by turning messy books into simple monthly reports, and lately I've been building dashboards so they can check it themselves."</p>
       </div>
-      <div>
-        <ol class="steps">
-          <li><strong>Start with who you help.</strong> A team, a type of customer or a kind of person. It works even if your title doesn't say it.</li>
-          <li><strong>Name the problem, not the task.</strong> "Reports" is a task. "Leaders not knowing where the money goes" is a problem.</li>
-          <li><strong>Add how in a few words.</strong> This is where your skills show up.</li>
-          <li><strong>End with your newest release.</strong> It signals where you're heading and gives people something to ask about.</li>
-        </ol>
-        <p class="example"><strong>Before:</strong> "I'm an accountant at a mid-size firm."<br><strong>After:</strong> "I help small business owners understand where their money goes by turning messy books into simple monthly reports, and lately I've been building dashboards so they can check it themselves."</p>
-      </div>
+      <div class="template">I help <b>[who]</b> with <b>[what problem]</b> by <b>[how you do it]</b>, and lately I've been <b>[what's new]</b>.</div>
     </div>
   </section>
 
-  <section id="posts" aria-labelledby="posts-h">
-    <div class="wrap latest">
-      <p class="label">Latest post</p>
-      <h2 id="posts-h" style="margin-bottom:24px">From the release notes</h2>
-      <a href="/posts/release-notes/">
-        <div><p class="meta" style="font-family:var(--mono);font-size:13px;margin-bottom:8px">Oct 13, 2026 · 3 min read</p><h3>Your career doesn't need a reinvention. It needs release notes.</h3><p>Why careers ship in versions, and a 10-minute exercise to write your own changelog.</p></div>
+  <section aria-labelledby="posts-h">
+    <div class="wrap">
+      <p class="eyebrow">Latest post</p>
+      <h2 id="posts-h">From the release notes</h2>
+      <a class="post-card" href="/posts/release-notes/">
+        <div><p class="meta">Oct 13, 2026 · 3 min read</p><h3>Your career doesn't need a reinvention. It needs release notes.</h3></div>
         <span class="go">Read it →</span>
       </a>
-      <p style="margin-top:18px"><a href="/posts/" style="display:inline;padding:0;border:0;background:none;font-weight:700">See all posts →</a></p>
     </div>
   </section>
 
-  <section id="about" aria-labelledby="about-h">
-    <div class="wrap about">
-      <p class="big-quote">Not a <span>reinvention</span>. Just the next release.</p>
-      <div>
-        <p class="label">About</p>
+  <section class="band" id="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <div class="about">
+        <p class="eyebrow">About</p>
         <h2 id="about-h">Hi, I'm Melissa</h2>
-        <p>I've rebranded myself more than once, and each time it was less about starting over and more about updating the story. This is where I share the frameworks and templates that helped, and honest notes from the middle of the process.</p>
-        <p>Read the <a href="/posts/">posts</a>, and follow along on Instagram at @chronicallyrebranding.</p>
+        <p>I've rebranded myself more than once, and each time it was less about starting over and more about updating the story. This is where I share the frameworks that helped, and honest notes from the middle of the process.</p>
+        <p><a class="link" href="https://www.instagram.com/chronicallyrebranding/" rel="noopener">Follow along on Instagram →</a></p>
       </div>
     </div>
   </section>
@@ -263,8 +262,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Chronically Rebranding · notes on rethinking your career</span>
-    <span>Instagram: @chronicallyrebranding</span>
+    <span>© 2026 Chronically Rebranding</span>
+    <span>@chronicallyrebranding</span>
   </div>
 </footer>
 
@@ -286,7 +285,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   if (!entries) entries = sample.slice();
 
   var list = document.getElementById("log-list");
-  var tag = document.getElementById("sample-tag");
+  var logName = document.getElementById("log-name");
   var status = document.getElementById("status");
 
   function save() {
@@ -300,10 +299,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     return n;
   }
   function render() {
-    tag.hidden = !isSample;
+    logName.textContent = isSample ? "example.changelog" : "my-career.changelog";
     list.innerHTML = "";
     if (!entries.length) {
-      list.appendChild(el("li", "empty", "Your changelog is empty. Add your first version with the form."));
+      list.appendChild(el("li", "empty", "Nothing here yet. Add your first version."));
       return;
     }
     entries.forEach(function (e, i) {
@@ -320,17 +319,17 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       rm.type = "button";
       rm.setAttribute("aria-label", "Remove " + e.title);
       rm.addEventListener("click", function () {
-        if (isSample) { isSample = false; }
-        entries.splice(i, 1); save(); render();
+        isSample = false; entries.splice(i, 1); save(); render();
       });
       li.appendChild(rm);
       list.appendChild(li);
     });
   }
   function nextVersion(type) {
-    var last = entries.length ? entries[entries.length - 1].version : "v0.0";
+    var last = entries.length ? entries[entries.length - 1].version : "";
     var m = /v?(\d+)\.(\d+)/.exec(last || "");
-    var maj = m ? +m[1] : 0, min = m ? +m[2] : 0;
+    if (!m) return "v1.0";
+    var maj = +m[1], min = +m[2];
     return type === "big" ? "v" + (maj + 1) + ".0" : "v" + maj + "." + (min + 1);
   }
 
@@ -341,9 +340,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     if (!title) { status.textContent = "Add what changed first."; return; }
     if (isSample) { entries = []; isSample = false; }
     var type = f.type.value;
-    entries.push({ version: f.version.value.trim() || nextVersion(type), type: type, title: title, note: f.note.value.trim() });
+    entries.push({ version: nextVersion(type), type: type, title: title, note: f.note.value.trim() });
     save(); render();
-    f.version.value = ""; f.title.value = ""; f.note.value = "";
+    f.title.value = ""; f.note.value = ""; document.getElementById("t-new").checked = true;
     status.textContent = "Added.";
     f.title.focus();
   });
@@ -357,9 +356,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       return e.version + " [" + (labels[e.type] || "new") + "] " + e.title + (e.note ? " - " + e.note : "");
     }).join("\n");
     if (!text) { status.textContent = "Nothing to copy yet."; return; }
-    var done = function () { status.textContent = "Copied to your clipboard."; };
     try {
-      navigator.clipboard.writeText(text).then(done, function () { status.textContent = "Copy didn't work here. Select the list and copy it instead."; });
+      navigator.clipboard.writeText(text).then(function () { status.textContent = "Copied."; },
+        function () { status.textContent = "Copy didn't work here. Select the list and copy it instead."; });
     } catch (e) { status.textContent = "Copy didn't work here. Select the list and copy it instead."; }
   });
   render();
