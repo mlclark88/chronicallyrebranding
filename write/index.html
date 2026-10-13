@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Write your career changelog · Chronically Rebranding</title>
+<meta name="description" content="A free, private workspace to list every version of your career, spot the patterns, and turn it into a one-sentence story.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: workspace page. Three steps down the page: list versions (form + live log), spot patterns (stats + nudges), write the story (sentence builder). Export bar at the end. */
+:root {
+  --paper: #f6f6f8;
+  --band: #ecedf1;
+  --card: #ffffff;
+  --ink: #1b1a26;
+  --muted: #5c5b6b;
+  --line: #e1e1e8;
+  --accent: #d93a47;
+  --accent-soft: #fde4e5;
+  --mint: #23806a;
+  --mint-soft: #dcf2ec;
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #13131a; --band: #191922; --card: #20202b; --ink: #f1f0f5; --muted: #a9a8b8; --line: #2e2e3b;
+    --accent: #ff6b74; --accent-soft: #3a1f24; --mint: #6fd1b4; --mint-soft: #16322b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #13131a; --band: #191922; --card: #20202b; --ink: #f1f0f5; --muted: #a9a8b8; --line: #2e2e3b;
+  --accent: #ff6b74; --accent-soft: #3a1f24; --mint: #6fd1b4; --mint-soft: #16322b; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
+
+header.site { padding-block: 22px; }
+header.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.mark { font-family: var(--display); font-weight: 800; font-size: 19px; text-decoration: none; letter-spacing: -0.02em; }
+.mark span { color: var(--accent); }
+.tagline { display: block; font-size: 13px; color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 22px; font-weight: 700; font-size: 15px; }
+nav a { text-decoration: none; }
+nav a:hover, nav a[aria-current="page"] { color: var(--accent); }
+
+.intro { padding-block: 32px 40px; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 5.5vw, 60px); line-height: 1; letter-spacing: -0.04em; margin: 0 0 16px; text-wrap: balance; }
+.lede { font-size: 19px; color: var(--muted); max-width: 36em; margin: 0 0 24px; }
+.steps-nav { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.steps-nav a { display: flex; align-items: center; gap: 10px; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px 8px 8px; font-weight: 700; font-size: 15px; }
+.steps-nav a:hover { border-color: var(--accent); }
+.steps-nav b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 13px; }
+.privacy { font-size: 14px; color: var(--muted); margin: 18px 0 0; }
+
+section.step { padding-block: 64px; }
+.band { background: var(--band); }
+.step-label { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 600; margin: 0 0 6px; }
+h2 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 3.6vw, 38px); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 10px; }
+.sub { color: var(--muted); max-width: 36em; margin: 0 0 28px; }
+
+/* step 1 */
+.grid1 { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 40px; align-items: start; }
+.panel { background: var(--card); border-radius: 18px; padding: 24px; box-shadow: 0 1px 2px rgba(20,20,40,.05); }
+.form { display: grid; gap: 16px; }
+.types { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; margin: 0; }
+.types legend { font-weight: 700; font-size: 14px; margin-bottom: 8px; padding: 0; }
+.types input { position: absolute; opacity: 0; pointer-events: none; }
+.types label { padding: 7px 13px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-size: 14px; font-weight: 700; cursor: pointer; }
+.types input:checked + label { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.types input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+.field { display: grid; gap: 6px; font-weight: 700; font-size: 14px; }
+.field input, .field textarea { font: inherit; font-weight: 400; font-size: 16px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); width: 100%; }
+.field textarea { resize: vertical; min-height: 64px; }
+.row2 { display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 12px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.btn { text-decoration: none; font-weight: 700; padding: 11px 20px; border-radius: 999px; font-size: 15px; background: var(--ink); color: var(--paper); border: 0; font-family: var(--body); cursor: pointer; }
+.btn:hover { background: var(--accent); }
+.btn.alt { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+.btn.alt:hover { border-color: var(--accent); color: var(--accent); background: var(--card); }
+.ghost { background: none; border: 0; font: inherit; font-weight: 700; font-size: 14px; color: var(--muted); cursor: pointer; padding: 4px 0; }
+.ghost:hover { color: var(--accent); }
+.status { font-size: 14px; color: var(--mint); min-height: 1.4em; margin: 0; }
+
+.prompts { margin-top: 20px; }
+.prompts p { font-weight: 700; font-size: 14px; margin: 0 0 8px; }
+.prompt-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.prompt-list button { font: inherit; font-size: 14px; text-align: left; background: none; border: 1px dashed var(--line); color: var(--muted); border-radius: 10px; padding: 6px 10px; cursor: pointer; }
+.prompt-list button:hover { border-color: var(--accent); color: var(--ink); }
+
+.log { background: var(--card); border-radius: 18px; box-shadow: 0 1px 2px rgba(20,20,40,.05), 0 12px 32px -12px rgba(20,20,40,.18); overflow: hidden; }
+.log-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 20px; font-family: var(--mono); font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+.log ol { list-style: none; margin: 0; padding: 6px 0; }
+.log li { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; padding: 12px 20px; align-items: start; border-bottom: 1px solid var(--line); }
+.log li:last-child { border-bottom: 0; }
+.v { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--muted); padding-top: 2px; }
+.log li.major .v { color: var(--accent); }
+.t { font-weight: 700; display: block; overflow-wrap: anywhere; }
+.d { color: var(--muted); font-size: 15px; display: block; overflow-wrap: anywhere; }
+.yr { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: 6px; font-weight: 400; }
+.chip { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 1px 8px; border-radius: 999px; margin-right: 8px; vertical-align: 2px; font-weight: 600; }
+.chip.new { background: var(--mint-soft); color: var(--mint); }
+.chip.big { background: var(--accent-soft); color: var(--accent); }
+.chip.fix { background: var(--band); color: var(--muted); }
+.tools { display: flex; gap: 2px; }
+.tools button { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 14px; line-height: 1; padding: 6px; border-radius: 6px; font-family: var(--body); }
+.tools button:hover:not(:disabled) { color: var(--accent); background: var(--paper); }
+.tools button:disabled { opacity: .3; cursor: default; }
+.empty { padding: 32px 20px; color: var(--muted); display: block !important; border: 0 !important; }
+.editing { background: var(--paper); }
+.log-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding: 12px 20px; border-top: 1px solid var(--line); }
+.sample-note { font-size: 13px; color: var(--accent); font-weight: 700; }
+
+/* step 2 */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+.stat { background: var(--card); border-radius: 14px; padding: 18px 20px; }
+.stat b { display: block; font-family: var(--display); font-size: 36px; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; color: var(--muted); }
+.stat.big b { color: var(--accent); }
+.stat.new b { color: var(--mint); }
+.insights { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.insights li { background: var(--card); border-radius: 12px; padding: 14px 18px; border-left: 4px solid var(--ink); }
+.insights li.nudge { border-left-color: var(--accent); }
+.insights li.good { border-left-color: var(--mint); }
+
+/* step 3 */
+.grid3 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.story-out { background: var(--ink); color: var(--paper); border-radius: 18px; padding: 30px; font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.5vw, 28px); line-height: 1.35; letter-spacing: -0.01em; min-height: 180px; }
+.story-out b { color: var(--accent); font-weight: 800; }
+.story-out .ph { opacity: .55; font-weight: 500; }
+.hint { font-size: 14px; color: var(--muted); margin: 6px 0 0; font-weight: 400; }
+
+/* export */
+.export { padding-block: 48px 72px; }
+.export .actions { margin-top: 18px; }
+
+footer { padding-block: 32px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+@media (max-width: 860px) {
+  .grid1, .grid3 { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  section.step { padding-block: 48px; }
+}
+@media (max-width: 480px) {
+  .log li { grid-template-columns: 44px minmax(0, 1fr); padding: 12px 16px; }
+  .tools { grid-column: 2; }
+  .row2 { grid-template-columns: minmax(0, 1fr); }
+  nav ul { gap: 16px; }
+}
+@media print {
+  header.site, .intro .steps-nav, #step1 .panel, .export, footer, .tools, .log-foot, .prompts { display: none !important; }
+  body { background: #fff; color: #000; }
+  .band { background: #fff; }
+  .grid1, .grid3 { grid-template-columns: 1fr; }
+}
+</style>
+<meta property="og:title" content="Write your career changelog">
+<meta property="og:description" content="List every version of your career, spot the patterns, and turn it into one sentence.">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div><a class="mark" href="/">Chronically <span>Rebranding</span></a><span class="tagline">Notes on rethinking your career</span></div>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="/write/" aria-current="page">Write yours</a></li>
+        <li><a href="/posts/">Posts</a></li>
+        <li><a href="/#about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <div class="wrap">
+      <h1>Write your career changelog</h1>
+      <p class="lede">List every version of your career, see the patterns, and turn it into one sentence you can use in a bio, on LinkedIn or in an interview. About 20 minutes, start to finish.</p>
+      <ol class="steps-nav">
+        <li><a href="#step1"><b>1</b>List your versions</a></li>
+        <li><a href="#step2"><b>2</b>Spot the patterns</a></li>
+        <li><a href="#step3"><b>3</b>Write your story</a></li>
+      </ol>
+      <p class="privacy">Private by design: everything you type stays in this browser. Nothing is sent anywhere.</p>
+    </div>
+  </div>
+
+  <section class="step band" id="step1" aria-labelledby="s1-h">
+    <div class="wrap">
+      <p class="step-label">Step 1</p>
+      <h2 id="s1-h">List your versions</h2>
+      <p class="sub">Start with your first real job and work forward. Versions number themselves: a big change starts a new major version, everything else is a point release.</p>
+      <div class="grid1">
+        <div class="panel">
+          <form class="form" id="entry-form">
+            <fieldset class="types">
+              <legend>What kind of change?</legend>
+              <input type="radio" name="type" id="t-new" value="new" checked><label for="t-new">Something new</label>
+              <input type="radio" name="type" id="t-big" value="big"><label for="t-big">A big change</label>
+              <input type="radio" name="type" id="t-fix" value="fix"><label for="t-fix">Updated my story</label>
+            </fieldset>
+            <div class="row2">
+              <label class="field" for="f-title">What changed
+                <input id="f-title" name="title" placeholder="Moved from teaching to UX research" required autocomplete="off">
+              </label>
+              <label class="field" for="f-year">Year
+                <input id="f-year" name="year" placeholder="2021" inputmode="numeric" maxlength="9" autocomplete="off">
+              </label>
+            </div>
+            <label class="field" for="f-note">Detail (optional)
+              <textarea id="f-note" name="note" placeholder="What you learned, who helped, or why it mattered"></textarea>
+            </label>
+            <div class="actions">
+              <button class="btn" type="submit" id="submit-btn">Add version</button>
+              <button class="ghost" type="button" id="cancel-edit" hidden>Cancel edit</button>
+              <p class="status" id="status" role="status"></p>
+            </div>
+          </form>
+          <div class="prompts">
+            <p>Stuck? Click a prompt to start from it.</p>
+            <div class="prompt-list" id="prompts"></div>
+          </div>
+        </div>
+        <div>
+          <div class="log">
+            <div class="log-head"><span class="dots"><i></i><i></i><i></i></span><span id="log-name">example.changelog</span></div>
+            <ol id="log-list" aria-live="polite"></ol>
+            <div class="log-foot">
+              <span class="sample-note" id="sample-note">This is an example. Add your first version to replace it.</span>
+              <button class="ghost" type="button" id="clear-btn">Clear all</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step2" aria-labelledby="s2-h">
+    <div class="wrap">
+      <p class="step-label">Step 2</p>
+      <h2 id="s2-h">Spot the patterns</h2>
+      <p class="sub">A quick read of your changelog. Look for the gap between what changed and when you last told the story.</p>
+      <div class="stats">
+        <div class="stat"><b id="st-total">0</b><span>versions</span></div>
+        <div class="stat new"><b id="st-new">0</b><span>new things added</span></div>
+        <div class="stat big"><b id="st-big">0</b><span>big changes</span></div>
+        <div class="stat"><b id="st-fix">0</b><span>story updates</span></div>
+      </div>
+      <ul class="insights" id="insights"></ul>
+    </div>
+  </section>
+
+  <section class="step band" id="step3" aria-labelledby="s3-h">
+    <div class="wrap">
+      <p class="step-label">Step 3</p>
+      <h2 id="s3-h">Write your story in one sentence</h2>
+      <p class="sub">Use your latest version, not every job you've had. Fill in the four blanks and watch the sentence build.</p>
+      <div class="grid3">
+        <form class="form" id="story-form">
+          <label class="field" for="s-who">Who do you help?
+            <input id="s-who" placeholder="small business owners" autocomplete="off">
+            <span class="hint">A team, a type of customer or a kind of person.</span>
+          </label>
+          <label class="field" for="s-problem">With what problem?
+            <input id="s-problem" placeholder="seeing where their money goes" autocomplete="off">
+            <span class="hint">The problem, not the task.</span>
+          </label>
+          <label class="field" for="s-how">How do you do it?
+            <input id="s-how" placeholder="turning messy books into simple monthly reports" autocomplete="off">
+          </label>
+          <label class="field" for="s-new">What's new lately?
+            <input id="s-new" placeholder="building dashboards so they can check it themselves" autocomplete="off">
+            <span class="hint">Pull this from your newest version.</span>
+          </label>
+        </form>
+        <div>
+          <div class="story-out" id="story-out" aria-live="polite"></div>
+          <div class="actions" style="margin-top:16px">
+            <button class="btn alt" type="button" id="copy-story">Copy sentence</button>
+            <p class="status" id="story-status" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="export" aria-labelledby="ex-h">
+    <div class="wrap">
+      <h2 id="ex-h">Take it with you</h2>
+      <p class="sub" style="margin-bottom:0">Copy your changelog into LinkedIn, notes or a résumé draft, or save it as a file.</p>
+      <div class="actions">
+        <button class="btn" type="button" id="copy-all">Copy changelog and story</button>
+        <button class="btn alt" type="button" id="download">Download as text file</button>
+        <button class="btn alt" type="button" id="print">Print</button>
+        <p class="status" id="export-status" role="status"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Chronically Rebranding</span>
+    <span><a href="/posts/">Read the posts</a> · @chronicallyrebranding</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var KEY = "cr-changelog-v1", SKEY = "cr-story-v1";
+  var labels = { "new": "new", "big": "big change", "fix": "update" };
+  var sample = [
+    { type: "new", title: "First real job", note: "Learned the basics and said yes to almost everything.", year: "2014" },
+    { type: "new", title: "Picked up a skill nobody asked for", note: "The side project that mattered later.", year: "2016" },
+    { type: "big", title: "Changed direction", note: "New field, new title, and a résumé that no longer fit.", year: "2019" },
+    { type: "new", title: "Led my first project", note: "", year: "2021" },
+    { type: "fix", title: "Updated the story", note: "New LinkedIn headline, bio and one-sentence answer.", year: "2022" }
+  ];
+  var prompts = [
+    ["new", "Learned a skill on the side"],
+    ["new", "Took on a stretch assignment"],
+    ["new", "Started managing people"],
+    ["big", "Switched fields"],
+    ["big", "Got promoted"],
+    ["big", "Left a job"],
+    ["fix", "Rewrote my LinkedIn headline"],
+    ["fix", "Updated my résumé"]
+  ];
+
+  function load(key) { try { return JSON.parse(localStorage.getItem(key) || "null"); } catch (e) { return null; } }
+  function store(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+
+  var saved = load(KEY);
+  var isSample = !(saved && Array.isArray(saved.entries));
+  var entries = isSample ? sample.map(function (e) { return Object.assign({}, e); }) : saved.entries;
+  var editing = -1;
+
+  function versions() {
+    var out = [], maj = 1, min = 0;
+    entries.forEach(function (e, i) {
+      if (i === 0) { maj = 1; min = 0; }
+      else if (e.type === "big") { maj += 1; min = 0; }
+      else { min += 1; }
+      out.push("v" + maj + "." + min);
+    });
+    return out;
+  }
+  function save() {
+    if (isSample) return;
+    var vs = versions();
+    store(KEY, { entries: entries.map(function (e, i) { return Object.assign({}, e, { version: vs[i] }); }) });
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function $(id) { return document.getElementById(id); }
+
+  var list = $("log-list"), form = $("entry-form"), status = $("status");
+
+  function toolBtn(label, aria, fn, disabled) {
+    var b = el("button", "", label); b.type = "button"; b.setAttribute("aria-label", aria); b.title = aria;
+    b.disabled = !!disabled; b.addEventListener("click", fn); return b;
+  }
+  function leaveSample() { if (isSample) { isSample = false; } }
+
+  function renderLog() {
+    $("log-name").textContent = isSample ? "example.changelog" : "my-career.changelog";
+    $("sample-note").hidden = !isSample;
+    list.innerHTML = "";
+    if (!entries.length) {
+      list.appendChild(el("li", "empty", "Nothing here yet. Add your first version on the left, or click a prompt."));
+      return;
+    }
+    var vs = versions();
+    entries.forEach(function (e, i) {
+      var li = el("li", (e.type === "big" ? "major" : "") + (i === editing ? " editing" : ""));
+      li.appendChild(el("span", "v", vs[i]));
+      var body = el("div");
+      var t = el("span", "t");
+      t.appendChild(el("span", "chip " + e.type, labels[e.type] || "new"));
+      t.appendChild(document.createTextNode(e.title));
+      if (e.year) t.appendChild(el("span", "yr", e.year));
+      body.appendChild(t);
+      if (e.note) body.appendChild(el("span", "d", e.note));
+      li.appendChild(body);
+      var tools = el("div", "tools");
+      tools.appendChild(toolBtn("↑", "Move up: " + e.title, function () { leaveSample(); move(i, -1); }, i === 0));
+      tools.appendChild(toolBtn("↓", "Move down: " + e.title, function () { leaveSample(); move(i, 1); }, i === entries.length - 1));
+      tools.appendChild(toolBtn("Edit", "Edit: " + e.title, function () { startEdit(i); }));
+      tools.appendChild(toolBtn("×", "Remove: " + e.title, function () { leaveSample(); entries.splice(i, 1); if (editing === i) stopEdit(); save(); renderAll(); }));
+      li.appendChild(tools);
+      list.appendChild(li);
+    });
+  }
+  function move(i, d) {
+    var j = i + d; if (j < 0 || j >= entries.length) return;
+    var tmp = entries[i]; entries[i] = entries[j]; entries[j] = tmp;
+    if (editing === i) editing = j; else if (editing === j) editing = i;
+    save(); renderAll();
+  }
+  function setType(v) { var r = $("t-" + v); if (r) r.checked = true; }
+  function startEdit(i) {
+    leaveSample();
+    editing = i; var e = entries[i];
+    setType(e.type); $("f-title").value = e.title; $("f-year").value = e.year || ""; $("f-note").value = e.note || "";
+    $("submit-btn").textContent = "Save changes"; $("cancel-edit").hidden = false;
+    status.textContent = ""; renderLog(); $("f-title").focus();
+  }
+  function stopEdit() {
+    editing = -1; form.reset(); setType("new");
+    $("submit-btn").textContent = "Add version"; $("cancel-edit").hidden = true;
+  }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var f = form.elements;
+    var title = f.title.value.trim();
+    if (!title) { status.textContent = "Add what changed first."; return; }
+    var item = { type: f.type.value, title: title, year: f.year.value.trim(), note: f.note.value.trim() };
+    if (isSample) { entries = []; isSample = false; }
+    if (editing > -1 && editing < entries.length) { entries[editing] = item; status.textContent = "Saved."; }
+    else { entries.push(item); status.textContent = "Added."; }
+    stopEdit(); save(); renderAll(); $("f-title").focus();
+  });
+  $("cancel-edit").addEventListener("click", function () { stopEdit(); renderLog(); status.textContent = ""; });
+  $("clear-btn").addEventListener("click", function () {
+    entries = []; isSample = false; stopEdit(); save(); renderAll();
+    status.textContent = "Cleared. Add your first version.";
+  });
+
+  var pl = $("prompts");
+  prompts.forEach(function (p) {
+    var b = el("button", "", p[1]); b.type = "button";
+    b.addEventListener("click", function () { setType(p[0]); $("f-title").value = p[1]; $("f-title").focus(); $("f-title").select(); });
+    pl.appendChild(b);
+  });
+
+  function renderPatterns() {
+    var c = { "new": 0, big: 0, fix: 0 };
+    entries.forEach(function (e) { c[e.type] = (c[e.type] || 0) + 1; });
+    $("st-total").textContent = entries.length; $("st-new").textContent = c["new"];
+    $("st-big").textContent = c.big; $("st-fix").textContent = c.fix;
+    var ul = $("insights"); ul.innerHTML = "";
+    function add(cls, text) { ul.appendChild(el("li", cls, text)); }
+    if (!entries.length) { add("", "Add a few versions in step 1 and your patterns will show up here."); return; }
+    if (isSample) add("", "These patterns are from the example. Add your own versions to see yours.");
+    var lastFix = -1; entries.forEach(function (e, i) { if (e.type === "fix") lastFix = i; });
+    var since = entries.length - 1 - lastFix;
+    if (lastFix === -1) add("nudge", "You haven't logged a story update yet. Your bio and résumé probably still describe an older version of you. Step 3 is a good place to start.");
+    else if (since >= 2) add("nudge", "You've shipped " + since + " changes since you last updated your story. Time for a patch.");
+    else add("good", "Your story is fairly current: your last update was " + (since === 0 ? "your most recent version." : "one version ago."));
+    if (c.big === 0 && entries.length >= 3) add("", "No big changes yet. That's fine: steady point releases add up. Look for the skill that shows up in every version.");
+    if (c.big >= 2) add("", c.big + " big changes. Look at what carried across them: that thread is the core of your story.");
+    var years = entries.map(function (e) { return parseInt(e.year, 10); }).filter(function (y) { return !isNaN(y); });
+    if (years.length >= 2) {
+      var span = Math.max.apply(null, years) - Math.min.apply(null, years);
+      if (span > 0) add("", "Your changelog covers " + span + " year" + (span === 1 ? "" : "s") + ", about one version every " + (span / Math.max(entries.length - 1, 1)).toFixed(1) + " years.");
+    }
+    var newest = entries[entries.length - 1];
+    add("", "Your newest version is \"" + newest.title + ".\" Use it for the last blank in step 3.");
+  }
+
+  var sFields = ["who", "problem", "how", "new"];
+  var story = load(SKEY) || {};
+  sFields.forEach(function (k) { var inp = $("s-" + k); inp.value = story[k] || ""; inp.addEventListener("input", function () { story[k] = inp.value; store(SKEY, story); renderStory(); }); });
+  function storyText() {
+    var v = function (k) { return (story[k] || "").trim() || $("s-" + k).placeholder; };
+    return "I help " + v("who") + " with " + v("problem") + " by " + v("how") + ", and lately I've been " + v("new") + ".";
+  }
+  function renderStory() {
+    var out = $("story-out"); out.innerHTML = "";
+    var parts = [["I help ", "who"], [" with ", "problem"], [" by ", "how"], [", and lately I've been ", "new"]];
+    parts.forEach(function (p) {
+      out.appendChild(document.createTextNode(p[0]));
+      var val = (story[p[1]] || "").trim();
+      var b = el("b", val ? "" : "ph", val || $("s-" + p[1]).placeholder);
+      out.appendChild(b);
+    });
+    out.appendChild(document.createTextNode("."));
+  }
+  function storyFilled() { return sFields.every(function (k) { return (story[k] || "").trim(); }); }
+
+  function logText() {
+    var vs = versions();
+    return entries.map(function (e, i) {
+      return vs[i] + (e.year ? " (" + e.year + ")" : "") + " [" + labels[e.type] + "] " + e.title + (e.note ? " - " + e.note : "");
+    }).join("\n");
+  }
+  function fullText() {
+    var t = "My career changelog\n\n" + (logText() || "(no versions yet)");
+    t += "\n\nMy story in one sentence\n\n" + (storyFilled() ? storyText() : "(not written yet)");
+    return t + "\n\nMade with chronicallyrebranding.com/write\n";
+  }
+  function copy(text, statusEl) {
+    var fail = function () { statusEl.textContent = "Copy didn't work here. Try Download instead."; };
+    try { navigator.clipboard.writeText(text).then(function () { statusEl.textContent = "Copied."; }, fail); } catch (e) { fail(); }
+  }
+  $("copy-story").addEventListener("click", function () {
+    if (!storyFilled()) { $("story-status").textContent = "Fill in all four blanks first."; return; }
+    copy(storyText(), $("story-status"));
+  });
+  $("copy-all").addEventListener("click", function () { copy(fullText(), $("export-status")); });
+  $("download").addEventListener("click", function () {
+    try {
+      var blob = new Blob([fullText()], { type: "text/plain" });
+      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "my-career-changelog.txt";
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      $("export-status").textContent = "Downloaded.";
+    } catch (e) { $("export-status").textContent = "Download didn't work here. Try Copy instead."; }
+  });
+  $("print").addEventListener("click", function () { window.print(); });
+
+  function renderAll() { renderLog(); renderPatterns(); }
+  renderAll(); renderStory();
+})();
+</script>
+
+</body>
+</html>
